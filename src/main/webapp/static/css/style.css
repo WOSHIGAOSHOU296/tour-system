@@ -10,15 +10,6 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-top: 70px;
-}
-
-/* 导航栏固定定位修正 */
-.navbar-fixed-top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
 }
 
 /* 主内容区撑开 */

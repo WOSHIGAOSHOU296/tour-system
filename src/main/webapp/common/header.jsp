@@ -44,8 +44,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if (sessionUser == null) { %>
-                <li><a href="${pageContext.request.contextPath}/login.jsp" class="nav-btn-outline">登录</a></li>
-                <li><a href="${pageContext.request.contextPath}/register.jsp" class="nav-btn-fill">注册</a></li>
+                <li><a href="${pageContext.request.contextPath}/login.jsp" style="border:1.5px solid rgba(255,255,255,0.7);color:#fff;padding:6px 20px;border-radius:20px;margin-top:12px;margin-left:8px;">登录</a></li>
+                <li><a href="${pageContext.request.contextPath}/register.jsp" style="background:#fff;color:#e65100;font-weight:bold;padding:6px 20px;border-radius:20px;margin-top:12px;margin-left:8px;border:1.5px solid #fff;">注册</a></li>
                 <% } else { %>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:10px;padding-bottom:10px;">
@@ -65,4 +65,4 @@
         </div>
     </div>
 </nav>
-<div class="main-content">
+<div class="main-content" style="padding-top:80px;">
