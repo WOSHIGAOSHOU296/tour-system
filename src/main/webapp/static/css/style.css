@@ -1,0 +1,347 @@
+/* ============================================================
+   个性化旅游定制平台 — 暖色调旅游风
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #fdf6f0;
+    color: #4a3728;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 主内容区撑开 */
+.main-content { flex: 1; }
+
+/* ==================== 导航栏 ==================== */
+.nav-orange {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: 0 2px 12px rgba(230,81,0,0.25);
+}
+.nav-orange .navbar-brand {
+    color: #fff !important;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.nav-orange .navbar-nav > li > a {
+    color: rgba(255,255,255,0.88) !important;
+    font-size: 14px;
+    transition: .2s;
+}
+.nav-orange .navbar-nav > li > a:hover {
+    color: #fff !important;
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+}
+.nav-orange .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+.nav-orange .dropdown-menu > li > a { color: #4a3728; }
+.nav-orange .dropdown-menu > li > a:hover { background: #fff3e0; color: #e65100; }
+.nav-orange .navbar-toggle .icon-bar { background: #fff; }
+
+/* 导航右侧按钮 */
+.nav-btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.7) !important;
+    color: #fff !important;
+    padding: 6px 20px !important;
+    border-radius: 20px !important;
+    margin-top: 12px;
+    margin-left: 8px;
+    transition: .2s;
+}
+.nav-btn-outline:hover {
+    background: #fff !important;
+    color: #e65100 !important;
+    border-color: #fff !important;
+}
+.nav-btn-fill {
+    background: #fff !important;
+    color: #e65100 !important;
+    font-weight: bold !important;
+    padding: 6px 20px !important;
+    border-radius: 20px !important;
+    margin-top: 12px;
+    margin-left: 8px;
+    border: 1.5px solid #fff !important;
+}
+
+/* ==================== Hero 区域 ==================== */
+.hero-section {
+    background: linear-gradient(135deg, rgba(230,81,0,0.08), rgba(255,143,0,0.15)),
+                #fff3e0;
+    padding: 80px 0 70px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.hero-section h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #bf360c;
+    margin-bottom: 12px;
+}
+.hero-section p {
+    font-size: 17px;
+    color: #8d6e63;
+    margin-bottom: 0;
+}
+
+/* ==================== 区块标题 ==================== */
+.section-title {
+    border-left: 5px solid #e65100;
+    padding-left: 18px;
+    margin-bottom: 8px;
+}
+.section-title h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: bold;
+    color: #bf360c;
+}
+.section-title + p {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 24px;
+    padding-left: 23px;
+}
+
+/* ==================== 景点/帖子 卡片 ==================== */
+.scenic-card {
+    background: #fff;
+    border-radius: 16px !important;
+    overflow: hidden;
+    border: none !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: .3s;
+    margin-bottom: 24px;
+}
+.scenic-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+.scenic-card .scenic-img-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scenic-card .caption {
+    padding: 20px;
+    min-height: auto;
+}
+.scenic-card .caption h4 { font-size: 18px; font-weight: bold; margin-top: 0; color: #4a3728; }
+.scenic-card .caption h4 a { color: #4a3728; text-decoration: none; }
+.scenic-card .caption h4 a:hover { color: #e65100; }
+
+/* 卡片标签 */
+.card-tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 4px;
+}
+.tag-price { background: #fff3e0; color: #e65100; }
+.tag-free { background: #e8f5e9; color: #2e7d32; }
+.tag-score { background: #e3f2fd; color: #1565c0; }
+.tag-views { background: #fce4ec; color: #c62828; }
+
+/* ==================== 详情页 ==================== */
+.detail-img-placeholder {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* 详情侧边栏面板 */
+.info-panel {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.info-panel .panel-heading {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 16px 16px 0 0;
+}
+.info-panel .table { margin-bottom: 0; }
+.info-panel .table th { color: #8d6e63; width: 80px; }
+
+/* 美食/酒店面板 */
+.section-panel {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-top: 20px;
+}
+.section-panel .panel-heading {
+    font-weight: bold;
+    border: none;
+}
+
+/* ==================== 按钮风格 ==================== */
+.btn-primary {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+    border: none;
+    border-radius: 24px;
+    font-weight: bold;
+    padding: 8px 24px;
+    transition: .2s;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #bf360c, #e65100);
+    box-shadow: 0 4px 16px rgba(230,81,0,0.3);
+}
+.btn-default {
+    border-radius: 24px;
+    padding: 8px 24px;
+}
+.btn-block {
+    border-radius: 24px;
+}
+
+/* ==================== 表单 ==================== */
+.form-panel {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.form-panel .panel-heading {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    padding: 16px;
+}
+.form-panel .form-control {
+    border-radius: 10px;
+    border: 1px solid #e0d5cc;
+    padding: 10px 16px;
+    transition: .2s;
+}
+.form-panel .form-control:focus {
+    border-color: #e65100;
+    box-shadow: 0 0 0 3px rgba(230,81,0,0.1);
+}
+
+/* ==================== 分类按钮组 ==================== */
+.cat-group { margin-bottom: 20px; }
+.cat-group .btn {
+    border-radius: 20px;
+    border: 1px solid #e0d5cc;
+    color: #8d6e63;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    padding: 6px 20px;
+    transition: .2s;
+}
+.cat-group .btn.active,
+.cat-group .btn:hover {
+    background: linear-gradient(90deg, #e65100, #ff8f00);
+    color: #fff;
+    border-color: transparent;
+}
+
+/* ==================== 论坛帖子面板 ==================== */
+.post-panel {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: .2s;
+}
+.post-panel:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+}
+.post-panel .panel-body h4 {
+    margin-top: 0;
+    font-weight: bold;
+}
+.post-panel .panel-body h4 a {
+    color: #4a3728;
+    text-decoration: none;
+}
+.post-panel .panel-body h4 a:hover { color: #e65100; }
+
+/* ==================== 评论气泡 ==================== */
+.comment-box {
+    background: #fdf6f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ff8f00;
+}
+.comment-box .comment-user { font-weight: bold; color: #e65100; }
+.comment-box .comment-time { font-size: 12px; color: #999; }
+
+/* ==================== 面包屑 ==================== */
+.breadcrumb {
+    background: #fff;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.breadcrumb a { color: #e65100; }
+
+/* ==================== 分页 ==================== */
+.pagination > li > a,
+.pagination > li > span {
+    border-radius: 10px !important;
+    margin: 0 2px;
+    border-color: #e0d5cc;
+    color: #8d6e63;
+}
+.pagination > .active > a,
+.pagination > .active > a:hover {
+    background: linear-gradient(90deg, #e65100, #ff8f00) !important;
+    border-color: #e65100 !important;
+    color: #fff !important;
+}
+
+/* ==================== 页脚 ==================== */
+footer {
+    background: #3e2723;
+    color: rgba(255,255,255,0.7);
+    padding: 30px 0;
+    margin-top: 60px;
+    text-align: center;
+    font-size: 13px;
+}
+footer p { margin: 4px 0; }
+
+/* ==================== Well 搜索区 ==================== */
+.well {
+    border-radius: 16px;
+    border: none;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 20px;
+}
+.well .form-control {
+    border-radius: 24px;
+    border: 1px solid #e0d5cc;
+    padding: 8px 18px;
+}
+
+/* ==================== 提醒框 ==================== */
+.alert {
+    border-radius: 12px;
+    border: none;
+}
+.alert-danger { background: #fce4ec; color: #c62828; }
+.alert-success { background: #e8f5e9; color: #2e7d32; }
+.alert-info { background: #e3f2fd; color: #1565c0; }

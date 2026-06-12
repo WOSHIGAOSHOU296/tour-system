@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context docBase="G:\tool\untitled1\src\main\webapp">
+  <Resources cacheMaxSize="10240">
+    <PreResources base="G:/tool/untitled1/target/classes" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
+    <PostResources base="C:/Users/16218/.m2/repository/org/apache/tomcat/tomcat-servlet-api/9.0.39/tomcat-servlet-api-9.0.39.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/tomcat-servlet-api-9.0.39.jar"/>
+    <PostResources base="C:/Users/16218/.m2/repository/mysql/mysql-connector-java/8.0.23/mysql-connector-java-8.0.23.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/mysql-connector-java-8.0.23.jar"/>
+    <PostResources base="C:/Users/16218/.m2/repository/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/protobuf-java-3.11.4.jar"/>
+  </Resources>
+</Context>
