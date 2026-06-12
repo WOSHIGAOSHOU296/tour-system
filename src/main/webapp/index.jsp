@@ -19,7 +19,7 @@
 <%@ include file="common/header.jsp" %>
 
 <!-- Hero -->
-<div class="hero-section">
+<div class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${pageContext.request.contextPath}/static/images/hero-bg.jpg') center/cover no-repeat, linear-gradient(135deg, rgba(230,81,0,0.08), rgba(255,143,0,0.15)), #fff3e0;">
     <div class="container">
         <h1>探索世界，从这里开始</h1>
         <p>个性化旅游定制平台，为您量身打造完美旅程</p>
