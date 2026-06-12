@@ -30,12 +30,12 @@ body {
     letter-spacing: 1px;
 }
 .nav-orange .navbar-nav > li > a {
-    color: rgba(255,255,255,0.88) !important;
+    color: rgba(255,255,255,0.88);
     font-size: 14px;
     transition: .2s;
 }
 .nav-orange .navbar-nav > li > a:hover {
-    color: #fff !important;
+    color: #fff;
     background: rgba(255,255,255,0.12);
     border-radius: 6px;
 }
