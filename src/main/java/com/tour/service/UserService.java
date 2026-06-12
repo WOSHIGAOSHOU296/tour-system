@@ -15,7 +15,7 @@ public class UserService {
      * 用户注册
      */
     public String register(String username, String password, String nickname,
-                           String email, String phone) {
+                           String email, String phone, Long roleId) {
         // 校验用户名
         if (username == null || username.trim().isEmpty()) {
             return "用户名不能为空";
@@ -43,8 +43,9 @@ public class UserService {
             return "注册失败，请重试";
         }
 
-        // 分配默认角色：普通用户 (role_id = 2)
-        userDao.assignRole(userId, 2L);
+        // 分配角色: 2=普通用户, 3=景区管理员，不允许注册为游客或平台管理员
+        Long finalRole = (roleId != null && roleId >= 2 && roleId <= 3) ? roleId : 2L;
+        userDao.assignRole(userId, finalRole);
         return null; // null 表示成功
     }
 
