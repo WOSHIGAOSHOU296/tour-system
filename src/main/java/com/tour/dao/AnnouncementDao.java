@@ -22,6 +22,7 @@ public class AnnouncementDao {
             stmt.setString(4, a.getContent());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
+            System.err.println("【公告插入失败】" + e.getMessage());
             e.printStackTrace();
         } finally {
             DBUtil.closeAll(null, stmt, conn);

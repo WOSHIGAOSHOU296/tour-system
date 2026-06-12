@@ -106,7 +106,11 @@ public class ScenicAdminController extends HttpServlet {
         a.setUserId(user.getUserId());
         a.setTitle(title.trim());
         a.setContent(content.trim());
-        announcementDao.insert(a);
+        boolean ok = announcementDao.insert(a);
+        if (!ok) {
+            resp.getWriter().write("<script>alert('发布失败，请检查tour_db数据库中announcements表是否存在');history.back();</script>");
+            return;
+        }
 
         resp.sendRedirect("scenicAdmin?action=manage&scenicId=" + scenicIdStr);
     }
