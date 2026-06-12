@@ -36,9 +36,10 @@
             Scenic s = hotList.get(i); %>
         <div class="col-md-4 col-sm-6">
             <div class="thumbnail scenic-card">
-                <div class="scenic-img-placeholder"
-                     style="background: hsl(<%= (i * 60) % 360 %>, 60%, 65%);">
-                    <span style="font-size:48px;color:#fff;"><%= s.getScenicName().substring(0, Math.min(3, s.getScenicName().length())) %></span>
+                <div class="scenic-img-placeholder" style="overflow:hidden;">
+                    <img src="${pageContext.request.contextPath}/<%= s.getImgUrl() %>" class="scenic-img"
+                         onerror="this.style.display='none';this.parentElement.style.background='hsl(<%= (i * 60) % 360 %>, 60%, 65%)';this.parentElement.innerHTML='<span style=font-size:48px;color:#fff><%= s.getScenicName().substring(0, Math.min(3, s.getScenicName().length())) %></span>'"
+                         alt="<%= s.getScenicName() %>">
                 </div>
                 <div class="caption">
                     <h4><%= s.getScenicName() %></h4>

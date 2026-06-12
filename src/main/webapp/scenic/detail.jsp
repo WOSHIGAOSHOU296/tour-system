@@ -26,11 +26,10 @@
     <div class="row">
         <div class="col-md-8">
             <!-- 景点图片 -->
-            <div class="detail-img-placeholder"
-                 style="background:linear-gradient(135deg,#ff8a65,#ff7043);height:350px;display:flex;align-items:center;justify-content:center;">
-                <span style="font-size:72px;color:rgba(255,255,255,0.6);">
-                    <%= scenic.getScenicName().substring(0, Math.min(4, scenic.getScenicName().length())) %>
-                </span>
+            <div class="detail-img-placeholder" style="overflow:hidden;border-radius:16px;">
+                <img src="${pageContext.request.contextPath}/<%= scenic.getImgUrl() %>" class="scenic-img-large"
+                     onerror="this.style.display='none';this.parentElement.style.cssText='background:linear-gradient(135deg,#ff8a65,#ff7043);height:350px;display:flex;align-items:center;justify-content:center;border-radius:16px';this.parentElement.innerHTML='<span style=font-size:72px;color:rgba(255,255,255,0.6)><%= scenic.getScenicName().substring(0, Math.min(4, scenic.getScenicName().length())) %></span>'"
+                     alt="<%= scenic.getScenicName() %>">
             </div>
 
             <!-- 景点简介 -->

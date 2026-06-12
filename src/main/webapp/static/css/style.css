@@ -136,6 +136,12 @@ body {
     align-items: center;
     justify-content: center;
 }
+.scenic-card .scenic-img {
+    width: 100%; height: 200px; object-fit: cover; display: block;
+}
+.scenic-card .scenic-img-fallback {
+    width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 48px; color: #fff;
+}
 .scenic-card .caption {
     padding: 20px;
     min-height: auto;

@@ -17,9 +17,10 @@
             for (Scenic s : scenics) { %>
         <div class="col-md-4 col-sm-6">
             <div class="thumbnail scenic-card">
-                <div class="scenic-img-placeholder"
-                     style="background: hsl(<%= (s.getScenicId() * 47) % 360 %>, 55%, 60%);height:160px;display:flex;align-items:center;justify-content:center;">
-                    <span style="font-size:40px;color:#fff;"><%= s.getScenicName().substring(0, Math.min(3, s.getScenicName().length())) %></span>
+                <div class="scenic-img-placeholder" style="overflow:hidden;height:160px;">
+                    <img src="${pageContext.request.contextPath}/<%= s.getImgUrl() %>" class="scenic-img"
+                         onerror="this.style.display='none';this.parentElement.style.background='hsl(<%= (s.getScenicId() * 47) % 360 %>, 55%, 60%)';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=font-size:40px;color:#fff><%= s.getScenicName().substring(0, Math.min(3, s.getScenicName().length())) %></span>'"
+                         alt="<%= s.getScenicName() %>">
                 </div>
                 <div class="caption">
                     <h4><%= s.getScenicName() %></h4>
