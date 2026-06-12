@@ -59,13 +59,14 @@ public class UserService {
         if (user.getStatus() == 0) {
             return null; // 账号已禁用
         }
+        // 密码校验，密码是加密后存储在数据库中的，所以这里要调用 PasswordUtil 的 verify 方法进行校验
         if (!PasswordUtil.verify(password, user.getPassword())) {
             return null;
         }
         // 加载角色ID
-        Long roleId = userDao.findRoleIdByUserId(user.getUserId());
+        /**Long roleId = userDao.findRoleIdByUserId(user.getUserId());
         user.setPassword(null); // 不暴露密码
-        // 用 gender 临时传递 roleId（已在User类中复用，实际通过session存）
+        // 用 gender 临时传递 roleId（已在User类中复用，实际通过session存） */
         return user;
     }
 

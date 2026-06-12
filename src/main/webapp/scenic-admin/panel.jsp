@@ -25,7 +25,7 @@
                 <div class="caption">
                     <h4><%= s.getScenicName() %></h4>
                     <p class="text-muted small">&#128205; <%= s.getCityName() %> | &#128065; <%= s.getViewCount() %>次浏览</p>
-                    <a href="scenicAdmin?action=manage&scenicId=<%= s.getScenicId() %>"
+                    <a href="${pageContext.request.contextPath}/scenicAdmin?action=manage&scenicId=<%= s.getScenicId() %>"
                        class="btn btn-primary btn-block btn-sm">管理此景区</a>
                 </div>
             </div>

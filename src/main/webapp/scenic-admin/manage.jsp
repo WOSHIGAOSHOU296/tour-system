@@ -16,7 +16,7 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="scenicAdmin?action=panel">景区管理中心</a></li>
+        <li><a href="${pageContext.request.contextPath}/scenicAdmin?action=panel">景区管理中心</a></li>
         <li class="active"><%= scenic.getScenicName() %></li>
     </ol>
 
@@ -34,7 +34,7 @@
                         <div>
                             <strong style="color:#bf360c;"><%= a.getTitle() %></strong>
                             <small class="text-muted"> &middot; <%= a.getUsername() %> &middot; <%= a.getCreatedAt() %></small>
-                            <a href="scenicAdmin?action=deleteAnnounce&annId=<%= a.getAnnId() %>&scenicId=<%= scenic.getScenicId() %>"
+                            <a href="${pageContext.request.contextPath}/scenicAdmin?action=deleteAnnounce&annId=<%= a.getAnnId() %>&scenicId=<%= scenic.getScenicId() %>"
                                class="text-danger pull-right" onclick="return confirm('确定删除该公告？')"
                                style="font-size:12px;">删除</a>
                         </div>
@@ -58,7 +58,7 @@
                         <div>
                             <strong style="color:#e65100;"><%= m.getUsername() %></strong>
                             <small class="text-muted"> &middot; <%= m.getCreatedAt() %></small>
-                            <a href="scenicAdmin?action=deleteMsg&msgId=<%= m.getMessageId() %>&scenicId=<%= scenic.getScenicId() %>"
+                            <a href="${pageContext.request.contextPath}/scenicAdmin?action=deleteMsg&msgId=<%= m.getMessageId() %>&scenicId=<%= scenic.getScenicId() %>"
                                class="text-danger pull-right" onclick="return confirm('确定删除该留言？')"
                                style="font-size:12px;">删除</a>
                         </div>
@@ -88,7 +88,7 @@
             <div class="panel form-panel" style="margin-top:16px;">
                 <div class="panel-heading">发布公告</div>
                 <div class="panel-body" style="padding:20px;">
-                    <form action="scenicAdmin" method="post">
+                    <form action="${pageContext.request.contextPath}/scenicAdmin" method="post">
                         <input type="hidden" name="action" value="doAnnounce">
                         <input type="hidden" name="scenicId" value="<%= scenic.getScenicId() %>">
                         <div class="form-group">
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            <a href="scenicAdmin?action=panel" class="btn btn-default btn-block" style="margin-top:10px;">返回景区列表</a>
+            <a href="${pageContext.request.contextPath}/scenicAdmin?action=panel" class="btn btn-default btn-block" style="margin-top:10px;">返回景区列表</a>
         </div>
     </div>
 </div>

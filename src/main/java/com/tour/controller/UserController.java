@@ -16,6 +16,11 @@ import java.util.List;
 public class UserController extends HttpServlet {
 
     private final UserService userService = new UserService();
+
+    /**
+     * 其他功能（注册、登录、个人信息）都经过了UserService，是因为它们属于"用户域"的业务逻辑——涉及密码加密、状态校验、角色分配等有业务规则的操作，需要 Service 层来协调。
+     * 但浏览历史查询是纯数据展示，没有业务逻辑：它不需要校验、不需要转换、不需要协调多个 DAO。所以为了快速实现，直接调了 DAO。
+     */
     private final BrowseRecordDao browseRecordDao = new BrowseRecordDao();
 
     @Override
@@ -30,7 +35,7 @@ public class UserController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html;charset=UTF-8");
 
-        String action = req.getParameter("action");
+        String action = req.getParameter("action");// 获取http请求参数中的action字段，用于区分不同的操作
         if (action == null) {
             action = "";
         }
@@ -59,7 +64,7 @@ public class UserController extends HttpServlet {
 
     private void login(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String username = req.getParameter("username");
+        String username = req.getParameter("username");// 获取http请求参数中的username和password字段，用于登录验证
         String password = req.getParameter("password");
 
         User user = userService.login(username, password);

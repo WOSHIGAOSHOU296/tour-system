@@ -20,11 +20,11 @@ public class UserDao {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            conn = DBUtil.getConnection();
-            String sql = "SELECT * FROM users WHERE username = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
+            conn = DBUtil.getConnection();//获取数据库连接
+            String sql = "SELECT * FROM users WHERE username = ?";//SQL语句
+            stmt = conn.prepareStatement(sql);//预编译sql语句
+            stmt.setString(1, username);//将username赋值给sql语句中第一个占位符
+            rs = stmt.executeQuery();//调用executeQuery方法，执行sql语句，返回结果集
             if (rs.next()) {
                 return mapUser(rs);
             }
@@ -49,7 +49,7 @@ public class UserDao {
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, userId);
             rs = stmt.executeQuery();
-            if (rs.next()) {
+            if (rs.next()) {//rs.next()判断结果集是否还有下一行数据，如果有则返回true
                 return mapUser(rs);
             }
         } catch (SQLException e) {
@@ -70,16 +70,16 @@ public class UserDao {
         try {
             conn = DBUtil.getConnection();
             String sql = "INSERT INTO users (username, password, nickname, email, phone, gender, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//statement对象返回自增主键
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getNickname());
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getPhone());
-            stmt.setInt(6, user.getGender() != null ? user.getGender() : 0);
+            stmt.setInt(6, user.getGender() != null ? user.getGender() : 0);//三元运算，如果gender为null，则默认为0，否则使用user.getGender()的值
             stmt.setInt(7, 1);
             stmt.executeUpdate();
-            rs = stmt.getGeneratedKeys();
+            rs = stmt.getGeneratedKeys();//获取自增主键，通常在INSERT操作后使用，用于获取新插入记录的ID，便于后续操作或返回给调用者
             if (rs.next()) {
                 return rs.getLong(1);
             }
@@ -106,7 +106,7 @@ public class UserDao {
             stmt.setString(3, user.getPhone());
             stmt.setInt(4, user.getGender() != null ? user.getGender() : 0);
             stmt.setLong(5, user.getUserId());
-            return stmt.executeUpdate() > 0;
+            return stmt.executeUpdate() > 0;//executeUpdate()返回受影响的行数，如果大于0则表示更新成功，否则更新失败
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -232,6 +232,8 @@ public class UserDao {
 
     /**
      * ResultSet → User 映射
+     * 这段代码将ResultSet转换为User对象：
+     * 从结果集中读取各字段值，设置到User实体的对应属性中，包括用户ID、用户名、密码、昵称、邮箱、手机、头像、性别、状态及时间戳，最后返回完整的User对象。
      */
     private User mapUser(ResultSet rs) throws SQLException {
         User u = new User();
