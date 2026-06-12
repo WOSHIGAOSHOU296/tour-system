@@ -10,6 +10,15 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 70px;
+}
+
+/* 导航栏固定定位修正 */
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 /* 主内容区撑开 */
@@ -48,7 +57,8 @@ body {
 .nav-orange .dropdown-menu > li > a:hover { background: #fff3e0; color: #e65100; }
 .nav-orange .navbar-toggle .icon-bar { background: #fff; }
 
-/* 导航右侧按钮 */
+/* 导航右侧按钮 — 提高优先级覆盖 navbar-nav 默认样式 */
+.nav-orange .navbar-nav > li > a.nav-btn-outline,
 .nav-btn-outline {
     border: 1.5px solid rgba(255,255,255,0.7) !important;
     color: #fff !important;
@@ -58,11 +68,13 @@ body {
     margin-left: 8px;
     transition: .2s;
 }
+.nav-orange .navbar-nav > li > a.nav-btn-outline:hover,
 .nav-btn-outline:hover {
     background: #fff !important;
     color: #e65100 !important;
     border-color: #fff !important;
 }
+.nav-orange .navbar-nav > li > a.nav-btn-fill,
 .nav-btn-fill {
     background: #fff !important;
     color: #e65100 !important;
