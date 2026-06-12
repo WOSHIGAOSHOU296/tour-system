@@ -231,6 +231,27 @@ public class UserDao {
     }
 
     /**
+     * 修改用户角色
+     */
+    public boolean updateRole(Long userId, Long roleId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "UPDATE user_role SET role_id = ? WHERE user_id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, roleId);
+            stmt.setLong(2, userId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeAll(null, stmt, conn);
+        }
+        return false;
+    }
+
+    /**
      * ResultSet → User 映射
      * 这段代码将ResultSet转换为User对象：
      * 从结果集中读取各字段值，设置到User实体的对应属性中，包括用户ID、用户名、密码、昵称、邮箱、手机、头像、性别、状态及时间戳，最后返回完整的User对象。

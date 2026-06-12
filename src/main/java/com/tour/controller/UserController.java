@@ -74,14 +74,14 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        HttpSession session = req.getSession();
-        session.setAttribute("user", user);
+        HttpSession session = req.getSession();//获取HTTP会话对象，用于存储用户信息，实现权限控制和个性化功能。
+        session.setAttribute("user", user);//将用户对象存入HTTP会话中，用于后续的权限控制和个性化功能。
         Long roleId = userService.getUserRoleId(user.getUserId());
         session.setAttribute("roleId", roleId);
 
-        String redirect = req.getParameter("redirect");
+        String redirect = req.getParameter("redirect");//获取http请求参数中的redirect字段，用于指定登录成功后跳转的页面。
         if (redirect != null && !redirect.isEmpty()) {
-            resp.sendRedirect(redirect);
+            resp.sendRedirect(redirect);//跳转到指定页面，登录成功后的跳转。如果redirect为空或未指定，则默认重定向到首页index.jsp。
         } else {
             resp.sendRedirect("index.jsp");
         }
@@ -95,11 +95,11 @@ public class UserController extends HttpServlet {
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
 
-        String error = userService.register(username, password, nickname, email, phone);
-        if (error != null) {
-            req.setAttribute("error", error);
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
-            return;
+        String error = userService.register(username, password, nickname, email, phone);//调用UserService的register方法执行注册，返回错误信息（如果有的话）
+        if (error != null) { //判断是否有错误：如果error不为null，说明注册失败
+            req.setAttribute("error", error);//将错误信息存入request作用域
+            req.getRequestDispatcher("register.jsp").forward(req, resp);//转发回注册页面显示错误提示
+            return;//终止后续执行
         }
 
         req.setAttribute("success", "注册成功，请登录");
@@ -122,7 +122,7 @@ public class UserController extends HttpServlet {
             resp.sendRedirect("login.jsp");
             return;
         }
-        User sessionUser = (User) session.getAttribute("user");
+        User sessionUser = (User) session.getAttribute("user");//从HTTP会话中读取之前存储的用户对象，并强制转换为User类型。用于验证用户是否已登录，获取当前操作用户的身份信息，实现权限控制和个性化功能。
         User user = userService.getProfile(sessionUser.getUserId());
         req.setAttribute("profile", user);
         req.getRequestDispatcher("WEB-INF/profile.jsp").forward(req, resp);
@@ -136,21 +136,21 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        User sessionUser = (User) session.getAttribute("user");
-        String pageStr = req.getParameter("page");
-        int page = 1;
+        User sessionUser = (User) session.getAttribute("user");//从HTTP会话中读取之前存储的用户对象，并强制转换为User类型。用于验证用户是否已登录，获取当前操作用户，实现权限控制和个性化功能。
+        String pageStr = req.getParameter("page");//获取http请求参数中的page字段，用于指定当前页码。
+        int page = 1;//默认当前页码为1，表示第一页。如果请求中包含page参数且不为空，则将当前页码设置为该值。
         if (pageStr != null && !pageStr.isEmpty()) {
             page = Integer.parseInt(pageStr);
         }
 
         List<BrowseRecord> records = browseRecordDao.findByUser(sessionUser.getUserId(), page, 10);
-        int total = browseRecordDao.countByUser(sessionUser.getUserId());
+        int total = browseRecordDao.countByUser(sessionUser.getUserId());//获取用户浏览记录的总数，用于计算总页数。
         int totalPages = (int) Math.ceil((double) total / 10);
 
         req.setAttribute("records", records);
         req.setAttribute("total", total);
         req.setAttribute("page", page);
         req.setAttribute("totalPages", totalPages);
-        req.getRequestDispatcher("WEB-INF/history.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/history.jsp").forward(req, resp);//转发回浏览记录页面，并传入用户浏览记录列表、总记录数、当前页码和总页数等信息。
     }
 }

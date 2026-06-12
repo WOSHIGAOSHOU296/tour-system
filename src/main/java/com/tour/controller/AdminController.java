@@ -8,7 +8,9 @@ import com.tour.model.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 后台管理控制器 — 平台管理员专用（roleId=4）
@@ -42,6 +44,9 @@ public class AdminController extends HttpServlet {
                 break;
             case "disableUser":
                 disableUser(req, resp);
+                break;
+            case "changeRole":
+                changeRole(req, resp);
                 break;
             case "posts":
                 posts(req, resp);
@@ -79,10 +84,18 @@ public class AdminController extends HttpServlet {
         int total = userDao.countAll();
         int totalPages = (int) Math.ceil((double) total / 10);
 
+        // 构建 userId → roleId 映射
+        Map<Long, Long> roleMap = new HashMap<>();
+        for (User u : users) {
+            Long roleId = userDao.findRoleIdByUserId(u.getUserId());
+            if (roleId != null) roleMap.put(u.getUserId(), roleId);
+        }
+
         req.setAttribute("users", users);
         req.setAttribute("total", total);
         req.setAttribute("page", page);
         req.setAttribute("totalPages", totalPages);
+        req.setAttribute("roleMap", roleMap);
         req.getRequestDispatcher("admin/users.jsp").forward(req, resp);
     }
 
@@ -92,6 +105,16 @@ public class AdminController extends HttpServlet {
         String statusStr = req.getParameter("status");
         if (userIdStr != null && statusStr != null) {
             userDao.updateStatus(Long.parseLong(userIdStr), Integer.parseInt(statusStr));
+        }
+        resp.sendRedirect("admin?action=users");
+    }
+
+    private void changeRole(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        String userIdStr = req.getParameter("userId");
+        String roleIdStr = req.getParameter("roleId");
+        if (userIdStr != null && roleIdStr != null) {
+            userDao.updateRole(Long.parseLong(userIdStr), Long.parseLong(roleIdStr));
         }
         resp.sendRedirect("admin?action=users");
     }
