@@ -37,7 +37,7 @@
             <% if (sessionUser != null) { %>
             <a href="strategy?action=create" class="btn btn-primary btn-block" style="margin-top:10px;">发布新攻略</a>
             <% } %>
-            <% if (roleId != null && roleId == 4) { %>
+            <% if ((roleId != null && roleId == 4) || (sessionUser != null && strategy.getUserId().equals(sessionUser.getUserId()))) { %>
             <hr>
             <a href="strategy?action=delete&id=<%= strategy.getStrategyId() %>"
                class="btn btn-default btn-block" style="color:#c62828;"

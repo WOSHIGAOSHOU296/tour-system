@@ -42,6 +42,10 @@
                     </p>
                     <p style="line-height:1.7;"><%= p.getContent() != null && p.getContent().length() > 80 ?
                             p.getContent().substring(0, 80) + "..." : p.getContent() %></p>
+                    <% if (sessionUser != null && (roleId != null && roleId == 4 || p.getUserId().equals(sessionUser.getUserId()))) { %>
+                    <a href="forum?action=deletePost&id=<%= p.getPostId() %>" class="text-danger small"
+                       onclick="return confirm('确定删除该帖子？')">删除</a>
+                    <% } %>
                 </div>
             </div>
             <% }} else { %>

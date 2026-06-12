@@ -47,7 +47,7 @@
                         <div>
                             <strong style="color:#e65100;"><%= c.getUsername() %></strong>
                             <small class="text-muted"> &middot; <%= c.getCreatedAt() %></small>
-                            <% if (roleId != null && roleId == 4) { %>
+                            <% if ((roleId != null && roleId == 4) || (sessionUser != null && c.getUserId().equals(sessionUser.getUserId()))) { %>
                             <a href="forum?action=deleteComment&commentId=<%= c.getCommentId() %>&postId=<%= post.getPostId() %>"
                                class="text-danger pull-right" onclick="return confirm('确定删除该评论？')"
                                style="font-size:12px;">删除</a>

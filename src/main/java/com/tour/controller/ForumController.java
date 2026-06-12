@@ -1,7 +1,10 @@
 package com.tour.controller;
 
 import com.tour.dao.BrowseRecordDao;
+import com.tour.dao.PostCommentDao;
 import com.tour.model.BrowseRecord;
+import com.tour.model.ForumPost;
+import com.tour.model.PostComment;
 import com.tour.model.User;
 import com.tour.service.ForumService;
 
@@ -17,6 +20,7 @@ public class ForumController extends HttpServlet {
 
     private final ForumService forumService = new ForumService();
     private final BrowseRecordDao browseRecordDao = new BrowseRecordDao();
+    private final PostCommentDao postCommentDao = new PostCommentDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -51,6 +55,9 @@ public class ForumController extends HttpServlet {
                 break;
             case "deleteComment":
                 deleteComment(req, resp);
+                break;
+            case "deletePost":
+                deletePost(req, resp);
                 break;
             default:
                 list(req, resp);
@@ -159,8 +166,13 @@ public class ForumController extends HttpServlet {
         String commentIdStr = req.getParameter("commentId");
         String postIdStr = req.getParameter("postId");
 
-        if (commentIdStr != null && (roleId != null && roleId == 4)) {
-            forumService.deleteComment(Long.parseLong(commentIdStr));
+        if (commentIdStr != null) {
+            Long commentId = Long.parseLong(commentIdStr);
+            PostComment comment = postCommentDao.findById(commentId);
+            // 作者本人或管理员可以删除
+            if (comment != null && (roleId == 4 || comment.getUserId().equals(user.getUserId()))) {
+                forumService.deleteComment(commentId);
+            }
         }
 
         if (postIdStr != null) {
@@ -168,5 +180,30 @@ public class ForumController extends HttpServlet {
         } else {
             resp.sendRedirect("forum?action=list");
         }
+    }
+
+    private void deletePost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        Long roleId = (Long) session.getAttribute("roleId");
+
+        String postIdStr = req.getParameter("id");
+        if (postIdStr == null) {
+            resp.sendRedirect("forum?action=list");
+            return;
+        }
+
+        Long postId = Long.parseLong(postIdStr);
+        ForumPost post = forumService.getPostDetail(postId) != null ?
+                (ForumPost) forumService.getPostDetail(postId).get("post") : null;
+
+        // 作者本人或管理员可以删除
+        if (post != null && (roleId == 4 || post.getUserId().equals(user.getUserId()))) {
+            com.tour.dao.ForumPostDao fpd = new com.tour.dao.ForumPostDao();
+            fpd.delete(postId);
+        }
+
+        resp.sendRedirect("forum?action=list");
     }
 }

@@ -141,6 +141,31 @@ public class ForumPostDao {
     }
 
     /**
+     * 删除帖子
+     */
+    public boolean delete(Long postId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = DBUtil.getConnection();
+            // 先删评论
+            stmt = conn.prepareStatement("DELETE FROM post_comments WHERE post_id = ?");
+            stmt.setLong(1, postId);
+            stmt.executeUpdate();
+            stmt.close();
+            // 再删帖子
+            stmt = conn.prepareStatement("DELETE FROM forum_posts WHERE post_id = ?");
+            stmt.setLong(1, postId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeAll(null, stmt, conn);
+        }
+        return false;
+    }
+
+    /**
      * 更新帖子状态（审核/下架）
      */
     public boolean updateStatus(Long postId, int status) {

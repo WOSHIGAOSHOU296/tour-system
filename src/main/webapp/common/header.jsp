@@ -55,6 +55,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="${pageContext.request.contextPath}/user?action=profile">个人中心</a></li>
                         <li><a href="${pageContext.request.contextPath}/collection?action=list">我的收藏</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user?action=history">浏览历史</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="${pageContext.request.contextPath}/user?action=logout">退出登录</a></li>
                     </ul>

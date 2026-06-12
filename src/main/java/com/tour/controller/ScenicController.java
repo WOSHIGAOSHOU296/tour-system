@@ -8,6 +8,7 @@ import com.tour.model.User;
 import com.tour.service.MessageService;
 import com.tour.service.ScenicService;
 import com.tour.dao.BrowseRecordDao;
+import com.tour.dao.MessageDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -152,16 +153,19 @@ public class ScenicController extends HttpServlet {
     private void deleteMessage(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         Long roleId = (Long) session.getAttribute("roleId");
-        if (roleId == null || roleId != 4) {
-            resp.sendRedirect("scenic?action=list");
-            return;
-        }
 
         String messageIdStr = req.getParameter("messageId");
         String scenicIdStr = req.getParameter("scenicId");
         if (messageIdStr != null) {
-            messageService.delete(Long.parseLong(messageIdStr));
+            Long msgId = Long.parseLong(messageIdStr);
+            MessageDao messageDao = new MessageDao();
+            Message msg = messageDao.findById(msgId);
+            // 作者本人或管理员可删除
+            if (msg != null && (roleId == 4 || msg.getUserId().equals(user.getUserId()))) {
+                messageService.delete(msgId);
+            }
         }
         resp.sendRedirect("scenic?action=detail&id=" + (scenicIdStr != null ? scenicIdStr : ""));
     }

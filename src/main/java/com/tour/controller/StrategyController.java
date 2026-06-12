@@ -135,12 +135,17 @@ public class StrategyController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         String idStr = req.getParameter("id");
-        if (idStr == null || roleId == null || roleId != 4) {
+        if (idStr == null) {
             resp.sendRedirect("strategy?action=list");
             return;
         }
 
-        strategyService.delete(Long.parseLong(idStr));
+        Long strategyId = Long.parseLong(idStr);
+        com.tour.model.Strategy s = strategyService.getDetail(strategyId);
+        // 作者本人或管理员可删除
+        if (s != null && (roleId == 4 || s.getUserId().equals(user.getUserId()))) {
+            strategyService.delete(strategyId);
+        }
         resp.sendRedirect("strategy?action=list");
     }
 }

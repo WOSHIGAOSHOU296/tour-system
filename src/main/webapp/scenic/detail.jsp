@@ -93,7 +93,7 @@
                         <div>
                             <strong style="color:#e65100;"><%= m.getUsername() %></strong>
                             <small class="text-muted"> &middot; <%= m.getCreatedAt() %></small>
-                            <% if (roleId != null && roleId == 4) { %>
+                            <% if ((roleId != null && roleId == 4) || (sessionUser != null && m.getUserId().equals(sessionUser.getUserId()))) { %>
                             <a href="scenic?action=deleteMessage&messageId=<%= m.getMessageId() %>&scenicId=<%= scenic.getScenicId() %>"
                                class="text-danger pull-right" onclick="return confirm('确定删除该留言？')"
                                style="font-size:12px;">删除</a>

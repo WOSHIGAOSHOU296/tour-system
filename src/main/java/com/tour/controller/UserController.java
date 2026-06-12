@@ -1,18 +1,22 @@
 package com.tour.controller;
 
+import com.tour.dao.BrowseRecordDao;
+import com.tour.model.BrowseRecord;
 import com.tour.model.User;
 import com.tour.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 
 /**
- * 用户控制器 — 处理注册/登录/注销/个人信息
+ * 用户控制器 — 处理注册/登录/注销/个人信息/浏览历史
  */
 public class UserController extends HttpServlet {
 
     private final UserService userService = new UserService();
+    private final BrowseRecordDao browseRecordDao = new BrowseRecordDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -44,6 +48,9 @@ public class UserController extends HttpServlet {
             case "profile":
                 profile(req, resp);
                 break;
+            case "history":
+                history(req, resp);
+                break;
             default:
                 resp.sendRedirect("index.jsp");
                 break;
@@ -62,13 +69,11 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        // 存入 Session
         HttpSession session = req.getSession();
         session.setAttribute("user", user);
         Long roleId = userService.getUserRoleId(user.getUserId());
         session.setAttribute("roleId", roleId);
 
-        // 跳转到来源页或首页
         String redirect = req.getParameter("redirect");
         if (redirect != null && !redirect.isEmpty()) {
             resp.sendRedirect(redirect);
@@ -116,5 +121,31 @@ public class UserController extends HttpServlet {
         User user = userService.getProfile(sessionUser.getUserId());
         req.setAttribute("profile", user);
         req.getRequestDispatcher("WEB-INF/profile.jsp").forward(req, resp);
+    }
+
+    private void history(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            resp.sendRedirect("login.jsp");
+            return;
+        }
+
+        User sessionUser = (User) session.getAttribute("user");
+        String pageStr = req.getParameter("page");
+        int page = 1;
+        if (pageStr != null && !pageStr.isEmpty()) {
+            page = Integer.parseInt(pageStr);
+        }
+
+        List<BrowseRecord> records = browseRecordDao.findByUser(sessionUser.getUserId(), page, 10);
+        int total = browseRecordDao.countByUser(sessionUser.getUserId());
+        int totalPages = (int) Math.ceil((double) total / 10);
+
+        req.setAttribute("records", records);
+        req.setAttribute("total", total);
+        req.setAttribute("page", page);
+        req.setAttribute("totalPages", totalPages);
+        req.getRequestDispatcher("WEB-INF/history.jsp").forward(req, resp);
     }
 }

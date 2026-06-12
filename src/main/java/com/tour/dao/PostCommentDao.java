@@ -70,6 +70,35 @@ public class PostCommentDao {
     }
 
     /**
+     * 根据ID查评论
+     */
+    public PostComment findById(Long commentId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "SELECT * FROM post_comments WHERE comment_id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, commentId);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                PostComment pc = new PostComment();
+                pc.setCommentId(rs.getLong("comment_id"));
+                pc.setPostId(rs.getLong("post_id"));
+                pc.setUserId(rs.getLong("user_id"));
+                pc.setContent(rs.getString("content"));
+                return pc;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeAll(rs, stmt, conn);
+        }
+        return null;
+    }
+
+    /**
      * 统计帖子的评论数
      */
     public int countByPostId(Long postId) {

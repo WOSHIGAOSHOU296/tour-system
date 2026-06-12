@@ -13,6 +13,35 @@ import java.util.List;
 public class MessageDao {
 
     /**
+     * 根据ID查留言
+     */
+    public Message findById(Long messageId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtil.getConnection();
+            String sql = "SELECT * FROM messages WHERE message_id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, messageId);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                Message msg = new Message();
+                msg.setMessageId(rs.getLong("message_id"));
+                msg.setScenicId(rs.getLong("scenic_id"));
+                msg.setUserId(rs.getLong("user_id"));
+                msg.setContent(rs.getString("content"));
+                return msg;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeAll(rs, stmt, conn);
+        }
+        return null;
+    }
+
+    /**
      * 发表留言
      */
     public boolean insert(Message msg) {
