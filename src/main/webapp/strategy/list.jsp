@@ -33,6 +33,10 @@
                     </p>
                     <p style="line-height:1.7;"><%= s.getContent() != null && s.getContent().length() > 100 ?
                             s.getContent().substring(0, 100) + "..." : s.getContent() %></p>
+                    <% if ((roleId != null && roleId == 4) || (sessionUser != null && s.getUserId().equals(sessionUser.getUserId()))) { %>
+                    <a href="strategy?action=delete&id=<%= s.getStrategyId() %>" class="text-danger small"
+                       onclick="return confirm('确定删除该攻略？')">删除</a>
+                    <% } %>
                 </div>
             </div>
             <% }} else { %>
