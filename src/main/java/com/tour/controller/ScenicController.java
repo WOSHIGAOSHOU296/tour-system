@@ -1,12 +1,14 @@
 package com.tour.controller;
 
 import com.tour.model.City;
+import com.tour.model.Announcement;
 import com.tour.model.BrowseRecord;
 import com.tour.model.Message;
 import com.tour.model.Scenic;
 import com.tour.model.User;
 import com.tour.service.MessageService;
 import com.tour.service.ScenicService;
+import com.tour.dao.AnnouncementDao;
 import com.tour.dao.BrowseRecordDao;
 import com.tour.dao.MessageDao;
 
@@ -24,6 +26,7 @@ public class ScenicController extends HttpServlet {
     private final ScenicService scenicService = new ScenicService();
     private final MessageService messageService = new MessageService();
     private final BrowseRecordDao browseRecordDao = new BrowseRecordDao();
+    private final AnnouncementDao announcementDao = new AnnouncementDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -120,11 +123,13 @@ public class ScenicController extends HttpServlet {
 
         Map<String, Object> surroundings = scenicService.getSurroundings(scenicId);
         List<Message> messages = messageService.getMessages(scenicId);
+        List<Announcement> announcements = announcementDao.findByScenicId(scenicId);
 
         req.setAttribute("scenic", scenic);
         req.setAttribute("foods", surroundings.get("foods"));
         req.setAttribute("hotels", surroundings.get("hotels"));
         req.setAttribute("messages", messages);
+        req.setAttribute("announcements", announcements);
         req.getRequestDispatcher("scenic/detail.jsp").forward(req, resp);
     }
 

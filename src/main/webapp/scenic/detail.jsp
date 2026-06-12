@@ -4,11 +4,13 @@
 <%@ page import="com.tour.model.Hotel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tour.model.Message" %>
+<%@ page import="com.tour.model.Announcement" %>
 <%
     Scenic scenic = (Scenic) request.getAttribute("scenic");
     List<Food> foods = (List<Food>) request.getAttribute("foods");
     List<Hotel> hotels = (List<Hotel>) request.getAttribute("hotels");
     List<Message> messages = (List<Message>) request.getAttribute("messages");
+    List<Announcement> announcements = (List<Announcement>) request.getAttribute("announcements");
     if (scenic == null) {
         response.sendRedirect(request.getContextPath() + "/scenic?action=list");
         return;
@@ -39,6 +41,24 @@
                     <p><%= scenic.getIntroduce() %></p>
                 </div>
             </div>
+
+            <!-- 景区公告 -->
+            <% if (announcements != null && !announcements.isEmpty()) { %>
+            <div class="section-panel panel" style="border-top:4px solid #e65100;margin-top:20px;">
+                <div class="panel-heading" style="background:#fbe9e7;color:#bf360c;">&#128226; 景区公告</div>
+                <div class="panel-body">
+                    <% for (Announcement a : announcements) { %>
+                    <div class="comment-box" style="border-left-color:#e65100;">
+                        <div>
+                            <strong style="color:#bf360c;"><%= a.getTitle() %></strong>
+                            <small class="text-muted"> &middot; <%= a.getUsername() %> &middot; <%= a.getCreatedAt() %></small>
+                        </div>
+                        <p style="margin-top:6px;"><%= a.getContent() %></p>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
 
             <!-- 周边美食 -->
             <div class="section-panel panel" style="border-top:4px solid #ff8f00;">
