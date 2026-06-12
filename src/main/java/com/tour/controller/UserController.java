@@ -94,10 +94,8 @@ public class UserController extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
-        String roleIdStr = req.getParameter("roleId");
-        Long roleId = (roleIdStr != null && !roleIdStr.isEmpty()) ? Long.parseLong(roleIdStr) : 2L;
 
-        String error = userService.register(username, password, nickname, email, phone, roleId);//调用UserService的register方法执行注册，返回错误信息（如果有的话）
+        String error = userService.register(username, password, nickname, email, phone);//调用UserService的register方法执行注册，返回错误信息（如果有的话）
         if (error != null) { //判断是否有错误：如果error不为null，说明注册失败
             req.setAttribute("error", error);//将错误信息存入request作用域
             req.getRequestDispatcher("register.jsp").forward(req, resp);//转发回注册页面显示错误提示

@@ -37,13 +37,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>角色</label>
-                            <select name="roleId" class="form-control">
-                                <option value="2">普通用户</option>
-                                <option value="3">景区管理员</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label>昵称</label>
                             <input type="text" name="nickname" class="form-control" placeholder="显示名称，默认使用用户名">
                         </div>
