@@ -1,5 +1,7 @@
 package com.tour.controller;
 
+import com.tour.dao.BrowseRecordDao;
+import com.tour.model.BrowseRecord;
 import com.tour.model.Scenic;
 import com.tour.model.User;
 import com.tour.service.StrategyService;
@@ -16,6 +18,7 @@ import java.util.Map;
 public class StrategyController extends HttpServlet {
 
     private final StrategyService strategyService = new StrategyService();
+    private final BrowseRecordDao browseRecordDao = new BrowseRecordDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -94,6 +97,18 @@ public class StrategyController extends HttpServlet {
         }
 
         req.setAttribute("strategy", strategy);
+
+        // 自动记录浏览
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            BrowseRecord br = new BrowseRecord();
+            br.setUserId(user.getUserId());
+            br.setBrowseType(2); // 2=攻略
+            br.setTargetId(strategyId);
+            browseRecordDao.insert(br);
+        }
+
         req.getRequestDispatcher("strategy/detail.jsp").forward(req, resp);
     }
 

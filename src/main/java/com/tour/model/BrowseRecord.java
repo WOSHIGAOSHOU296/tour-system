@@ -8,6 +8,8 @@ public class BrowseRecord {
     private Integer browseType;
     private Long targetId;
     private Date browseTime;
+    // 展示辅助字段
+    private String targetName;
 
     public BrowseRecord() {}
 
@@ -21,4 +23,6 @@ public class BrowseRecord {
     public void setTargetId(Long targetId) { this.targetId = targetId; }
     public Date getBrowseTime() { return browseTime; }
     public void setBrowseTime(Date browseTime) { this.browseTime = browseTime; }
+    public String getTargetName() { return targetName; }
+    public void setTargetName(String targetName) { this.targetName = targetName; }
 }

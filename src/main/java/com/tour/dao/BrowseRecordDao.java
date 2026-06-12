@@ -35,7 +35,7 @@ public class BrowseRecordDao {
     }
 
     /**
-     * 查询用户浏览历史（分页）
+     * 查询用户浏览历史（分页，带目标名称）
      */
     public List<BrowseRecord> findByUser(Long userId, int page, int pageSize) {
         List<BrowseRecord> list = new ArrayList<>();
@@ -44,7 +44,17 @@ public class BrowseRecordDao {
         ResultSet rs = null;
         try {
             conn = DBUtil.getConnection();
-            String sql = "SELECT * FROM browse_records WHERE user_id=? ORDER BY browse_time DESC LIMIT ?, ?";
+            String sql = "SELECT b.*, " +
+                         "  CASE b.browse_type " +
+                         "    WHEN 1 THEN a.scenic_name " +
+                         "    WHEN 2 THEN s.title " +
+                         "    WHEN 3 THEN f.title " +
+                         "    ELSE '未知' END AS target_name " +
+                         "FROM browse_records b " +
+                         "LEFT JOIN attractions a ON b.browse_type=1 AND b.target_id=a.scenic_id " +
+                         "LEFT JOIN strategies s ON b.browse_type=2 AND b.target_id=s.strategy_id " +
+                         "LEFT JOIN forum_posts f ON b.browse_type=3 AND b.target_id=f.post_id " +
+                         "WHERE b.user_id=? ORDER BY b.browse_time DESC LIMIT ?, ?";
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, userId);
             stmt.setInt(2, (page - 1) * pageSize);
@@ -57,6 +67,7 @@ public class BrowseRecordDao {
                 br.setBrowseType(rs.getInt("browse_type"));
                 br.setTargetId(rs.getLong("target_id"));
                 br.setBrowseTime(rs.getTimestamp("browse_time"));
+                br.setTargetName(rs.getString("target_name"));
                 list.add(br);
             }
         } catch (SQLException e) {

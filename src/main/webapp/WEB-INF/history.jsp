@@ -27,7 +27,7 @@
     <div class="panel post-panel">
         <div class="panel-body">
             <span class="card-tag tag-price"><%= typeNames[r.getBrowseType()] %></span>
-            &nbsp; ID: <%= r.getTargetId() %>
+            &nbsp; <strong><%= r.getTargetName() != null ? r.getTargetName() : "已删除" %></strong>
             <small class="text-muted pull-right">&#128338; <%= r.getBrowseTime() %></small>
             <a href="<%= link %>" class="btn btn-primary btn-xs pull-right" style="margin-right:10px;">查看</a>
         </div>
